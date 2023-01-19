@@ -8,9 +8,13 @@
         <div class="col fw-bold">Task</div>
         <div class="col-2 fw-bold">Done</div>
       </div>
+      <!-- 2nd feature adding a filtering effect to rearrange the list each time a task is checked completed-->
       <div class="row" v-for="t in tasks" v-bind:key="t.action">
         <div class="col">{{t.action}}</div>
-        <div class="col-2">{{t.done}}</div>
+        <div class="col-2">
+          <!-- 1st feature adding a check box for easy responding useability -->
+          <input type="checkbox" v-model="t.done"  class="form-check-input"/>{{t.done}}
+        </div>
       </div>
     </div>
   </div>
