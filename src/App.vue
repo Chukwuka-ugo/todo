@@ -41,13 +41,11 @@
 
 export default {
   name: "App",
+  // adding a 4th feature to enable this app create, store and retrive its stored data locally on the browser
   data() {
     return {
       name: "Ugo",
-      tasks: [{ action: "Buy Flowers", done: false },
-      { action: "Get Shoes", done: false },
-      { action: "Collect Tickets", done: true },
-      { action: "Call Ade", done: false }],
+      tasks: [],
       hideCompleted: true,
       newItemText: ""
     };
@@ -64,7 +62,14 @@ export default {
         action: this.newItemText,
         done: false
       });
+      localStorage.setItem("todos",JSON.stringify(this.tasks))
       this.newItemText = "";
+    }
+  },
+  created(){
+    let data =localStorage.getItem("todos")
+    if (data != null) {
+      this.tasks = JSON.parse(data);
     }
   }
 };
