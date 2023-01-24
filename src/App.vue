@@ -3,7 +3,14 @@
     <h4 class="bg-primary text-white text-center p-2">
       {{ name }}'s To Do List
     </h4>
-    <div class="container-fluid">
+    <div class="container-fluid p-4">
+    <!-- adding a little bit more features to enable the deletion of completed tasks and the ability to display a message when there are no more tasks to be completed  -->
+      <div class="row" v-if="filteredTasks.length == 0">
+        <div class="col text-center">
+          <b>Nothing to do. Hurray!</b>
+        </div>
+      </div>
+      <template v-else>
       <div class="row">
         <div class="col fw-bold">Task</div>
         <div class="col-3 fw-bold text-center">Done</div>
@@ -16,6 +23,7 @@
           <input type="checkbox" v-model="t.done" class="form-check-input" />{{ t.done }}
         </div>
       </div>
+      </template>
       <!-- 3rd feature adding a create option button to add a new task  -->
       <div class="row py-2">
         <div class="col">
@@ -31,6 +39,11 @@
           <label class="form-check-label fw-bold">
             Hide completed tasks
           </label>
+        </div>
+        <div class="col text-center"> 
+          <button class="btn btn-sm btn-warning" v-on:click="deleteCompleted">
+              Delete Completed
+          </button>
         </div>
       </div>
     </div>
@@ -63,7 +76,15 @@ export default {
         done: false
       });
       localStorage.setItem("todos",JSON.stringify(this.tasks))
+      this.storeData();
       this.newItemText = "";
+    },
+    storeData(){
+      localStorage.setItem("todos", JSON.stringify(this.tasks));
+    },
+    deleteCompleted(){
+      this.tasks = this.tasks.filter(t => !t.done);
+      this.storeData();
     }
   },
   created(){
